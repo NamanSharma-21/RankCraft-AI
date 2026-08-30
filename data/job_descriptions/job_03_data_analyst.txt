@@ -1,0 +1,21 @@
+Job Title: Data Analyst & Business Intelligence Specialist
+Department: Analytics & BI
+Location: On-site / Hybrid
+
+About the Role:
+We are looking for a Data Analyst to transform complex datasets into actionable business intelligence dashboards and analytical reports.
+
+Key Responsibilities:
+- Extract, clean, and transform data from diverse SQL databases and data warehouses.
+- Build interactive dashboards and reporting suites in Tableau and Power BI.
+- Perform exploratory data analysis and statistical modeling using Python, Pandas, and NumPy.
+- Automate recurring business reporting and ETL data pipelines.
+- Present data-driven findings and insights to executive stakeholders.
+
+Requirements & Qualifications:
+- 3+ years of experience in data analysis, business intelligence, or quantitative analytics.
+- Advanced SQL proficiency (complex joins, CTEs, window functions, query optimization).
+- Strong data manipulation skills in Python (Pandas, NumPy) and Excel (VLOOKUP, Pivot Tables).
+- Proven track record building enterprise dashboards in Tableau or Power BI.
+- Understanding of ETL processes, data warehousing concepts, and data quality assurance.
+- Strong communication and data storytelling skills.

@@ -1,0 +1,37 @@
+job_id,candidate_id,grade,is_relevant,rationale
+JOB-01,CAND-001,3,1,"Direct senior ML/NLP background, PyTorch, FastAPI, AWS, MLOps, TF-IDF."
+JOB-01,CAND-002,3,1,"Strong NLP data scientist, Scikit-Learn, PyTorch, TF-IDF, text vectorization."
+JOB-01,CAND-006,2,1,"Junior Data Scientist with ML, Python, Scikit-Learn, TF-IDF background."
+JOB-01,CAND-003,2,1,"Full-stack Python developer with FastAPI, Docker, AWS, PostgreSQL (solid Python/backend match, lacks deep ML)."
+JOB-01,CAND-004,2,1,"Backend Python engineer with FastAPI, Docker, CI/CD, SQL (Python/API match, lacks ML/NLP)."
+JOB-01,CAND-007,1,0,"DevOps engineer with Docker, Kubernetes, AWS, Python (infrastructure match, no ML/NLP)."
+JOB-01,CAND-005,1,0,"Senior Data Analyst with Python/Pandas/SQL (analytics background, no ML/NLP engineering)."
+JOB-01,CAND-012,1,0,"Database admin with SQL, PostgreSQL, Python (database match, no ML/NLP)."
+JOB-01,CAND-008,0,0,"Frontend web developer (React/CSS/HTML), no ML/NLP/Python."
+JOB-01,CAND-011,0,0,"Technical writer, documentation only."
+JOB-01,CAND-009,0,0,"Digital marketing & SEO, no software/ML skills."
+JOB-01,CAND-010,0,0,"Certified Public Accountant, non-technical financial domain."
+JOB-02,CAND-003,3,1,Direct full-stack Python/FastAPI/Django/HTML5/CSS3/JavaScript/PostgreSQL match.
+JOB-02,CAND-004,3,1,Strong backend Python/FastAPI/Django/PostgreSQL engineer with API expertise.
+JOB-02,CAND-001,2,1,"Strong Python/FastAPI/Docker/PostgreSQL backend skills, primary focus is ML."
+JOB-02,CAND-008,2,1,"Frontend developer with strong HTML5, CSS3, JavaScript, UI/UX (covers frontend half of role)."
+JOB-02,CAND-002,2,1,"Data scientist with Python, FastAPI, Docker, PostgreSQL skills."
+JOB-02,CAND-007,1,0,"DevOps engineer with Docker, CI/CD, Python scripting, AWS."
+JOB-02,CAND-012,1,0,"Database admin with PostgreSQL, SQL, Python scripting."
+JOB-02,CAND-006,1,0,Junior Data Scientist with basic Python/SQL.
+JOB-02,CAND-005,1,0,"Data analyst with Python/SQL, lacks web development experience."
+JOB-02,CAND-011,0,0,"Technical writer, documentation only."
+JOB-02,CAND-009,0,0,Digital marketing & SEO.
+JOB-02,CAND-010,0,0,CPA Accountant.
+JOB-03,CAND-005,3,1,"Direct Senior Data Analyst match with SQL, Tableau, Power BI, Python, Pandas."
+JOB-03,CAND-006,2,1,"Junior Data Scientist with SQL, Pandas, Matplotlib, exploratory data analysis."
+JOB-03,CAND-012,2,1,"Senior DBA with advanced SQL, query tuning, PostgreSQL, ETL."
+JOB-03,CAND-002,2,1,"Data scientist with strong Python, Pandas, NumPy, statistical modeling, SQL."
+JOB-03,CAND-001,1,0,"Senior ML engineer with Python, SQL, statistics (overqualified/focused on deep learning)."
+JOB-03,CAND-004,1,0,"Backend engineer with SQL, Python, PostgreSQL."
+JOB-03,CAND-003,1,0,"Full-stack developer with SQL, PostgreSQL, Python."
+JOB-03,CAND-007,0,0,DevOps engineer with infrastructure focus.
+JOB-03,CAND-008,0,0,Frontend developer (React/CSS).
+JOB-03,CAND-009,0,0,"Digital marketing (analytics mentions SEO/Google Ads, not BI)."
+JOB-03,CAND-010,0,0,"CPA accountant (financial reporting, not BI data analytics)."
+JOB-03,CAND-011,0,0,Technical writer.

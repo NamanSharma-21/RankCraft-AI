@@ -1,0 +1,27 @@
+Elena Rostova
+Backend Python Engineer & API Developer
+Email: elena.rostova.eng@example.com | Location: Seattle, WA
+
+PROFESSIONAL SUMMARY:
+Backend Software Engineer with 4 years of experience specializing in Python, FastAPI, Django, and database architecture. Proven ability to create resilient microservices, integrate relational databases, and maintain CI/CD pipelines in cloud environments.
+
+SKILLS:
+- Programming: Python, SQL, Bash
+- Frameworks: FastAPI, Django, Flask, SQLAlchemy, Pydantic, Uvicorn
+- Databases: PostgreSQL, SQLite, Redis, Relational Database Modeling
+- Infrastructure: Docker, Git, GitHub Actions, CI/CD, AWS, Linux
+- Web Standards: RESTful APIs, HTTP, JSON, WebSockets, OpenAPI
+
+PROFESSIONAL EXPERIENCE:
+Backend Engineer | Cascade Data Systems (2022 – Present)
+- Engineered high-performance backend endpoints using FastAPI and PostgreSQL.
+- Implemented robust input validation, serialization, and error handling mechanisms.
+- Automated test suites using Pytest with 92% code coverage.
+- Containerized applications using Docker and deployed via GitHub Actions CI/CD.
+
+Python Developer | InnovateTech (2020 – 2022)
+- Built internal REST APIs and ETL data transformation scripts using Python.
+- Designed relational schemas and optimized SQL queries for high-volume transactions.
+
+EDUCATION:
+- B.S. in Computer Science, University of Washington (2020)

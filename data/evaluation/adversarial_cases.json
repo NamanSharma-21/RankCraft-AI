@@ -1,0 +1,84 @@
+{
+  "benchmark_job": {
+    "job_id": "JOB-01",
+    "title": "Senior AI / Machine Learning Engineer",
+    "required_experience_years": 5.0,
+    "required_degree": "Bachelor's",
+    "required_skills": ["Python", "Machine Learning", "PyTorch", "Scikit-Learn", "FastAPI", "Docker"],
+    "preferred_skills": ["Kubernetes", "Transformers", "MLOps", "CI/CD"]
+  },
+  "cases": [
+    {
+      "case_id": "CASE-A",
+      "scenario": "Exact Keyword Match",
+      "candidate_name": "Aaron Vance",
+      "raw_text": "Senior Machine Learning Engineer with 6 years experience. Proficient in Python, Machine Learning, PyTorch, Scikit-Learn, FastAPI, Docker, Kubernetes, Transformers, and MLOps. B.S. in Computer Science (2018). Experience: Senior ML Engineer at AlphaTech (2018 - 2024).",
+      "expected_fit": "High Fit",
+      "ground_truth_grade": 3,
+      "description": "Candidate matches exact keywords and meets all experience and degree requirements."
+    },
+    {
+      "case_id": "CASE-B",
+      "scenario": "Synonym Match",
+      "candidate_name": "Bianca Thorne",
+      "raw_text": "Senior AI Specialist with 6 years experience. Expert in Python, deep neural networks, computational linguistics, statistical learning, containerization with containers, and model deployment pipelines. M.S. in Data Science (2018). Experience: Senior AI Specialist at NeuroCorp (2018 - 2024).",
+      "expected_fit": "High Fit",
+      "ground_truth_grade": 3,
+      "description": "Candidate uses synonyms (computational linguistics for NLP, statistical learning for ML, containerization for Docker)."
+    },
+    {
+      "case_id": "CASE-C",
+      "scenario": "Abbreviation Match",
+      "candidate_name": "Calvin Wu",
+      "raw_text": "Senior ML Engineer with 5 years experience. Strong in Py, ML, DL, NLP, K8s, CI/CD, and fast api microservices. B.S. in Computer Science (2019). Experience: ML Engineer at CloudStack (2019 - 2024).",
+      "expected_fit": "High Fit",
+      "ground_truth_grade": 3,
+      "description": "Candidate uses abbreviations (ML, DL, NLP, K8s, Py) to describe identical technical competencies."
+    },
+    {
+      "case_id": "CASE-D",
+      "scenario": "High Lexical Similarity / Keyword Stuffing (Poor Actual Fit)",
+      "candidate_name": "Derek Cole",
+      "raw_text": "Senior Enterprise Sales Director. Managed quota sales for accounts using Python, Machine Learning, PyTorch, Scikit-Learn, FastAPI, Docker, Kubernetes, MLOps software licenses. 7 years experience in sales and revenue generation. B.A. in Marketing (2017). Experience: Enterprise Account Executive at SalesForce Global (2017 - 2024).",
+      "expected_fit": "Poor Fit",
+      "ground_truth_grade": 0,
+      "description": "Sales director mentioning tech keywords in sales context; high lexical overlap but wrong role discipline."
+    },
+    {
+      "case_id": "CASE-E",
+      "scenario": "Strong Candidate with Descriptive Wording",
+      "candidate_name": "Elena Rostova",
+      "raw_text": "Principal AI Architect with 7 years experience. Designed large-scale neural network architectures and production microservices serving millions of prediction requests daily. Built automated training workflows and continuous delivery pipelines. M.S. in Software Engineering (2017). Experience: Principal Architect at ScaleTech (2017 - 2024).",
+      "expected_fit": "High Fit",
+      "ground_truth_grade": 3,
+      "description": "Strong practitioner describing achievements conceptually without repeating exact keyword list."
+    },
+    {
+      "case_id": "CASE-F",
+      "scenario": "Missing Critical Skill (FastAPI & Docker)",
+      "candidate_name": "Felix Gomez",
+      "raw_text": "Senior Machine Learning Scientist with 6 years experience. Expert in Python, PyTorch, Scikit-Learn, and scientific algorithms. No web backend or containerization experience (strictly research offline scripting). Ph.D. in Physics (2018). Experience: Research Scientist at Quantum Labs (2018 - 2024).",
+      "expected_fit": "Moderate Fit",
+      "ground_truth_grade": 2,
+      "description": "Strong ML scientist missing mandatory engineering skills (FastAPI, Docker)."
+    },
+    {
+      "case_id": "CASE-G",
+      "scenario": "Strong Experience but Missing Education",
+      "candidate_name": "Giselle Roy",
+      "raw_text": "Lead Machine Learning Engineer with 10 years experience. Expert in Python, PyTorch, Scikit-Learn, FastAPI, Docker, Kubernetes, and MLOps. Self-taught programmer with High School diploma. Experience: Lead ML Engineer at Vertex AI (2014 - 2024).",
+      "expected_fit": "High Experience / Degree Gap",
+      "ground_truth_grade": 2,
+      "description": "Outstanding 10-year veteran missing formal university degree requirement."
+    },
+    {
+      "case_id": "CASE-H",
+      "scenario": "Strong Skills but Insufficient Experience",
+      "candidate_name": "Harry Lin",
+      "raw_text": "Junior Machine Learning Engineer with 6 months internship experience. Familiar with Python, PyTorch, Scikit-Learn, FastAPI, and Docker from recent coding bootcamp. B.S. in Computer Science (2024). Experience: ML Intern at StartUp AI (Jan 2024 - Jun 2024).",
+      "expected_fit": "Low Experience",
+      "ground_truth_grade": 1,
+      "description": "Junior candidate with all required skills listed, but only 0.5 years experience vs 5.0 years required."
+    }
+  ]
+}

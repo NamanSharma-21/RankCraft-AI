@@ -1,1391 +1,291 @@
-# RankCraft-AI
+# RankCraft AI: Multi-Factor ATS Resume Screening & Candidate Ranking System
 
-# RankCraft AI
+> **LaunchED Artificial Intelligence Major Capstone Project — Option 2**  
+> An explainable, deterministic, multi-factor ATS candidate ranking engine combining TF-IDF Vectorization and Cosine Similarity with structured profile parsing, skill taxonomy normalization, experience/education alignment, and an 8-point ATS parseability check.
 
-### Intelligent Recruiting Workspace & Multi-Factor Candidate Screening
-
-RankCraft AI is an AI-assisted recruiting platform designed to help hiring teams screen and prioritize candidates more efficiently.
-
-The system combines **TF-IDF text representation, cosine similarity, deterministic skill normalization, structured resume analysis, and multi-factor matching** to generate transparent candidate screening scores.
-
-Rather than treating candidate screening as a black-box prediction, RankCraft AI exposes the signals contributing to each candidate's ranking, including skills, experience, education, job-title relevance, and resume parseability.
-
-> **Important:** RankCraft AI is a screening and decision-support system. It does not make final hiring decisions.
+[![Python 3.9+](https://img.shields.io/badge/Python-3.9%2B-blue.svg)](https://www.python.org/)
+[![FastAPI](https://img.shields.io/badge/FastAPI-2.0%2B-green.svg)](https://fastapi.tiangolo.com/)
+[![scikit-learn](https://img.shields.io/badge/scikit--learn-1.6%2B-orange.svg)](https://scikit-learn.org/)
+[![License: MIT](https://img.shields.io/badge/License-MIT-purple.svg)](LICENSE)
 
 ---
 
-## Table of Contents
-
+## 📋 Table of Contents
 - [Overview](#overview)
 - [Key Features](#key-features)
-- [How It Works](#how-it-works)
-- [ML Pipeline](#ml-pipeline)
-- [Screening Methodology](#screening-methodology)
 - [System Architecture](#system-architecture)
-- [Technology Stack](#technology-stack)
+- [Machine Learning & Multi-Factor Scoring Methodology](#machine-learning--multi-factor-scoring-methodology)
+  - [1. Domain-Aware Text Ingestion & PII Sanitization](#1-domain-aware-text-ingestion--pii-sanitization)
+  - [2. Configurable Skill Taxonomy Normalization](#2-configurable-skill-taxonomy-normalization)
+  - [3. Sublinear TF-IDF & Cosine Similarity (Required Baseline)](#3-sublinear-tf-idf--cosine-similarity-required-baseline)
+  - [4. Composite Screening Score Formula](#4-composite-screening-score-formula)
+  - [5. 8-Point ATS Parseability Audit](#5-8-point-ats-parseability-audit)
 - [Project Structure](#project-structure)
-- [Data](#data)
-- [Resume Processing](#resume-processing)
-- [API](#api)
-- [Security](#security)
-- [Testing](#testing)
-- [Performance](#performance)
-- [Running Locally](#running-locally)
-- [Environment Variables](#environment-variables)
-- [Deployment](#deployment)
-- [Responsible AI](#responsible-ai)
-- [Limitations](#limitations)
-- [Research Context](#research-context)
-- [Future Improvements](#future-improvements)
-- [License](#license)
+- [Installation & Quickstart](#installation--quickstart)
+- [Running the Web Dashboard & FastAPI Backend](#running-the-web-dashboard--fastapi-backend)
+- [Running the Jupyter Notebook](#running-the-jupyter-notebook)
+- [Running Automated Tests](#running-automated-tests)
+- [Evaluation & Benchmark Results](#evaluation--benchmark-results)
+  - [Standard 3-Role IR Benchmark](#standard-3-role-ir-benchmark)
+  - [Adversarial Benchmark Case Studies (8 Scenarios)](#adversarial-benchmark-case-studies-8-scenarios)
+- [Privacy & Ethical Guardrails](#privacy--ethical-guardrails)
+- [Limitations & Future Scope](#limitations--future-scope)
 
 ---
 
-# Overview
+## 🎯 Overview
 
-Recruiters often need to review large numbers of resumes against a single job description.
+**RankCraft AI** is an explainable candidate screening prototype built for talent acquisition teams. It allows recruiters to evaluate multiple resumes in diverse formats (**PDF**, **DOCX**, **TXT**) against job descriptions.
 
-Traditional resume screening can require substantial manual effort and may make it difficult to consistently compare candidates.
-
-RankCraft AI addresses this workflow by transforming a job description and candidate resumes into structured screening signals.
-
-### Core workflow
-
-```text
-                    JOB DESCRIPTION
-                           │
-                           ▼
-                  Text Preprocessing
-                           │
-                           ▼
-                    TF-IDF Vectorizer
-                           │
-                           │
-RESUMES ───────► Text Preprocessing
-                           │
-                           ▼
-                    TF-IDF Vectors
-                           │
-                           ▼
-                 Cosine Similarity
-                           │
-                           ▼
-              Multi-Factor Candidate
-                    Evaluation
-                           │
-              ┌────────────┼────────────┐
-              ▼            ▼            ▼
-          Skills       Experience    Education
-              │            │            │
-              └────────────┼────────────┘
-                           ▼
-                  Screening Score
-                           │
-                           ▼
-                  Candidate Ranking
-                           │
-                           ▼
-              Recruiter Review & Action
-
-
-
-# Reframed Question
-
-You need a **GitHub-ready README for RankCraft AI** that accurately represents the current implementation, architecture, ML methodology, dataset handling, testing, and deployment, while looking professional enough for a public project repository.
-
-I’ve based this on the deployment/audit document you uploaded, rather than inventing capabilities. 
-
-Below is a **copy-paste-ready `README.md`**.
-
-````markdown
-# RankCraft AI
-
-### Intelligent Recruiting Workspace & Multi-Factor Candidate Screening
-
-RankCraft AI is an AI-assisted recruiting platform designed to help hiring teams screen and prioritize candidates more efficiently.
-
-The system combines **TF-IDF text representation, cosine similarity, deterministic skill normalization, structured resume analysis, and multi-factor matching** to generate transparent candidate screening scores.
-
-Rather than treating candidate screening as a black-box prediction, RankCraft AI exposes the signals contributing to each candidate's ranking, including skills, experience, education, job-title relevance, and resume parseability.
-
-> **Important:** RankCraft AI is a screening and decision-support system. It does not make final hiring decisions.
+The system combines statistical Information Retrieval (**TF-IDF + Cosine Similarity**) with deterministic rule-based candidate profiling: extracting canonical skills (`JS` $\rightarrow$ `JavaScript`, `K8s` $\rightarrow$ `Kubernetes`), verifying required vs preferred qualifications, matching past job titles and experience duration, checking education degree levels, and auditing resume formatting via an **8-point ATS Parseability Checker**.
 
 ---
 
-## Table of Contents
+## ✨ Key Features
 
-- [Overview](#overview)
-- [Key Features](#key-features)
-- [How It Works](#how-it-works)
-- [ML Pipeline](#ml-pipeline)
-- [Screening Methodology](#screening-methodology)
-- [System Architecture](#system-architecture)
-- [Technology Stack](#technology-stack)
-- [Project Structure](#project-structure)
-- [Data](#data)
-- [Resume Processing](#resume-processing)
-- [API](#api)
-- [Security](#security)
-- [Testing](#testing)
-- [Performance](#performance)
-- [Running Locally](#running-locally)
-- [Environment Variables](#environment-variables)
-- [Deployment](#deployment)
-- [Responsible AI](#responsible-ai)
-- [Limitations](#limitations)
-- [Research Context](#research-context)
-- [Future Improvements](#future-improvements)
-- [License](#license)
+- 📄 **Multi-Format Ingestion:** Robust text extraction for `.pdf` (via `pypdf`), `.docx` (via `python-docx`), and `.txt` files.
+- 🛡️ **Domain-Aware NLP Preprocessing:** Strips PII (email, phone, URLs) while explicitly preserving compound technical terms (`C++`, `.NET`, `CI/CD`, `Scikit-Learn`, `FastAPI`).
+- 🏷️ **Configurable Skill Normalization:** External JSON taxonomy mapping aliases and abbreviations to canonical skills (`data/config/skills_taxonomy.json`).
+- 📌 **Required vs. Preferred Classification:** Automatically parses job descriptions to distinguish mandatory vs nice-to-have qualifications.
+- 📐 **Sublinear TF-IDF + Cosine Similarity:** Primary required statistical vector space model.
+- ⚖️ **Project-Defined Composite Screening Score:** Transparent weighted evaluation across 5 dimensions:
+  $$\text{Screening Score} = 0.40 \times \text{TF-IDF} + 0.25 \times \text{Skills} + 0.15 \times \text{Title} + 0.10 \times \text{Experience} + 0.10 \times \text{Education}$$
+- 🔍 **8-Point ATS Parseability Diagnostic:** Checks extraction completeness, contact detection, timeline validity, and section headers (Score: 0-100%).
+- 📊 **Candidate Comparison Matrix:** Side-by-side comparison modal in the UI.
+- 📥 **1-Click CSV Export:** Downloads candidate rankings, scores, and explainability breakdowns.
+- 💡 **Explainability Engine:** Generates natural language narratives detailing why each candidate ranked at their position.
 
 ---
 
-# Overview
+## 🏗️ System Architecture
 
-Recruiters often need to review large numbers of resumes against a single job description.
-
-Traditional resume screening can require substantial manual effort and may make it difficult to consistently compare candidates.
-
-RankCraft AI addresses this workflow by transforming a job description and candidate resumes into structured screening signals.
-
-### Core workflow
-
-```text
-                    JOB DESCRIPTION
-                           │
-                           ▼
-                  Text Preprocessing
-                           │
-                           ▼
-                    TF-IDF Vectorizer
-                           │
-                           │
-RESUMES ───────► Text Preprocessing
-                           │
-                           ▼
-                    TF-IDF Vectors
-                           │
-                           ▼
-                 Cosine Similarity
-                           │
-                           ▼
-              Multi-Factor Candidate
-                    Evaluation
-                           │
-              ┌────────────┼────────────┐
-              ▼            ▼            ▼
-          Skills       Experience    Education
-              │            │            │
-              └────────────┼────────────┘
-                           ▼
-                  Screening Score
-                           │
-                           ▼
-                  Candidate Ranking
-                           │
-                           ▼
-              Recruiter Review & Action
-````
-
-The objective is not to replace recruiters.
-
-The objective is to reduce repetitive screening work while making the evidence behind candidate rankings visible.
-
----
-
-# Key Features
-
-## AI-Assisted Resume Screening
-
-Compare candidate resumes against a target job description using TF-IDF vectorization and cosine similarity.
-
-## Multi-Factor Candidate Matching
-
-Candidate evaluation incorporates multiple structured signals:
-
-* TF-IDF relevance
-* Skill coverage
-* Job-title relevance
-* Experience duration
-* Education level
-* ATS parseability
-
-## Explainable Screening
-
-Instead of presenting only a single opaque score, RankCraft AI exposes the signals contributing to the screening result.
-
-Examples include:
-
-* Matched skills
-* Missing skills
-* Experience match
-* Education match
-* Job-title match
-* TF-IDF relevance
-* Resume parseability
-
-## Candidate Ranking
-
-Candidates can be ranked according to calculated screening results, allowing recruiters to prioritize review.
-
-## Resume Parsing
-
-The system supports extraction from:
-
-* PDF
-* DOCX
-* TXT
-
-## Skill Normalization
-
-A configurable skill taxonomy normalizes common aliases and technology terms into canonical skills.
-
-For example, multiple representations of the same technology can be mapped to a consistent internal representation.
-
-## ATS-Oriented Resume Diagnostics
-
-The system includes an 8-point parseability diagnostic to identify structural characteristics that may affect automated resume processing.
-
-## Recruiting Workspace
-
-The application provides a SaaS-style workflow around:
-
-* Jobs
-* Candidates
-* Screening
-* Candidate pipeline
-* Analytics
-* Workspace activity
-* Authentication
-
-## Candidate Pipeline
-
-Candidates can move through recruiting stages such as:
-
-```text
-Applied
-   ↓
-Screening
-   ↓
-Shortlisted
-   ↓
-Interview
-   ↓
-Offer
-   ↓
-Hired
+```
+┌─────────────────────────────────────────────────────────────┐
+│                    Recruiter / User UI                      │
+│            (HTML5 / CSS3 / Vanilla JS Web Dashboard)        │
+└──────────────────────────────┬──────────────────────────────┘
+                               │ HTTP Multipart / REST Form
+                               ▼
+┌─────────────────────────────────────────────────────────────┐
+│                     FastAPI Backend API                     │
+│    - /rank  - /rank-raw-text  - /api/sample-data  - /export  │
+└──────────────────────────────┬──────────────────────────────┘
+                               │
+                               ▼
+┌─────────────────────────────────────────────────────────────┐
+│               Ingestion & Structured Parsing Layer          │
+│   - pypdf (PDF)  - python-docx (DOCX)  - txt decoder        │
+│   - Structured Parser (Contact, Experience, Degree, ATS)    │
+└──────────────────────────────┬──────────────────────────────┘
+                               │
+                               ▼
+┌─────────────────────────────────────────────────────────────┐
+│             Skill Extraction & Taxonomy Normalization       │
+│     - Configurable JSON Taxonomy (Synonyms & Abbreviations) │
+│     - Required vs Preferred JD Qualification Segmentation   │
+└──────────────────────────────┬──────────────────────────────┘
+                               │
+                               ▼
+┌─────────────────────────────────────────────────────────────┐
+│              ML Vectorization & Multi-Factor Matching       │
+│   - Scikit-Learn TfidfVectorizer (Unigrams & Bigrams)       │
+│   - Cosine Similarity Dot Product                           │
+│   - Multi-Factor Matchers (Title, Experience, Education)   │
+└──────────────────────────────┬──────────────────────────────┘
+                               │
+                               ▼
+┌─────────────────────────────────────────────────────────────┐
+│                 Output & Explainability Engine              │
+│  Rank #1..N, Screening Score, TF-IDF Match %, Matched Skills│
+└─────────────────────────────────────────────────────────────┘
 ```
 
 ---
 
-# How It Works
+## 🧠 Machine Learning & Multi-Factor Scoring Methodology
 
-RankCraft AI follows a deterministic processing pipeline.
+### 1. Domain-Aware Text Ingestion & PII Sanitization
+Compound programming terms are normalized before punctuation stripping:
+- `C++` $\rightarrow$ `cpp`, `C#` $\rightarrow$ `csharp`, `.NET` $\rightarrow$ `dotnet`, `Node.js` $\rightarrow$ `nodejs`, `CI/CD` $\rightarrow$ `cicd`, `Scikit-Learn` $\rightarrow$ `scikitlearn`, `FastAPI` $\rightarrow$ `fastapi`.
 
-### 1. Job Description
+### 2. Configurable Skill Taxonomy Normalization
+An external JSON taxonomy (`data/config/skills_taxonomy.json`) deterministically maps abbreviations (`ML`, `NLP`, `DL`, `K8s`, `Postgres`, `TS`, `JS`) to standardized canonical names.
 
-The recruiter provides a target job description containing information such as:
+### 3. Sublinear TF-IDF & Cosine Similarity (Required Baseline)
+Transformed into a shared feature space using logarithmic term frequency and smoothed inverse document frequency:
+$$\text{TF-IDF}(t, d, D) = (1 + \log(\text{TF}(t, d))) \times \left(\log\left(\frac{1 + |D|}{1 + \text{DF}(t)}\right) + 1\right)$$
+$$\text{Cosine Similarity}(\mathbf{u}, \mathbf{v}) = \cos(\theta) = \mathbf{u} \cdot \mathbf{v} = \sum_{i=1}^M u_i v_i$$
 
-* role
-* required skills
-* preferred skills
-* experience requirements
-* education requirements
-* responsibilities
+### 4. Composite Screening Score Formula
+A transparent, project-defined composite metric combining:
+- **TF-IDF Match ($40\%$):** Directional cosine similarity.
+- **Skill Coverage ($25\%$):** Weighted overlap with Required ($80\%$) and Preferred ($20\%$) skills.
+- **Job Title Match ($15\%$):** Role title token overlap and core noun matching.
+- **Experience Match ($10\%$):** Ratio of candidate extracted years to JD requirement (uncertainty handled explicitly).
+- **Education Match ($10\%$):** Degree level hierarchy (PhD > Master's > Bachelor's) and technical discipline alignment.
 
-### 2. Resume Ingestion
-
-Candidate resumes are uploaded through the application.
-
-The system supports PDF, DOCX, and TXT documents.
-
-### 3. Text Extraction
-
-Resume content is extracted into text using the appropriate parser.
-
-### 4. Preprocessing
-
-The extracted text passes through domain-aware preprocessing.
-
-This includes:
-
-* normalization
-* text cleaning
-* preservation of compound technology terms
-* PII-oriented processing
-* token preparation
-
-### 5. Skill Extraction
-
-A deterministic skill taxonomy identifies and normalizes recognized technologies and skills.
-
-### 6. TF-IDF Representation
-
-The job description and resumes are transformed into TF-IDF vectors.
-
-Both unigrams and bigrams are used.
-
-### 7. Cosine Similarity
-
-Cosine similarity measures the textual relevance between the job description and each candidate resume.
-
-### 8. Structured Matching
-
-Additional deterministic matchers evaluate:
-
-* job title
-* experience tenure
-* education degree level
-* ATS parseability
-
-### 9. Screening Score
-
-The system combines the available screening signals into a candidate screening result.
-
-### 10. Ranking
-
-Candidates are ordered according to their calculated screening results.
-
-### 11. Recruiter Review
-
-The recruiter can inspect the underlying evidence and decide what action to take.
+### 5. 8-Point ATS Parseability Audit
+1. Text Extraction Cleanliness ($\ge 50$ words)
+2. Candidate Name Detection
+3. Email Contact Detection
+4. Phone Contact Detection
+5. Work Experience Section
+6. Timeline / Dates Extraction
+7. Education & Degree Detection
+8. Technical Skill Extraction ($\ge 4$ skills)
 
 ---
 
-# ML Pipeline
+## 📁 Project Structure
 
-The core machine-learning/NLP pipeline is intentionally deterministic and interpretable.
-
-```text
-Resume / Job Description
-          │
-          ▼
-    Text Extraction
-          │
-          ▼
-     Preprocessing
-          │
-          ▼
-    Skill Extraction
-          │
-          ▼
-    TF-IDF Vectorization
-          │
-          ▼
-   Cosine Similarity
-          │
-          ▼
- Structured Matchers
-          │
-     ┌────┼─────┐
-     ▼    ▼     ▼
-   Title Experience Education
-          │
-          ▼
-   ATS Parseability
-          │
-          ▼
-   Screening Score
-          │
-          ▼
- Candidate Ranking
 ```
-
-## TF-IDF
-
-Term Frequency-Inverse Document Frequency represents text according to the importance of its terms.
-
-The implementation uses:
-
-* unigrams
-* bigrams
-* scikit-learn `TfidfVectorizer`
-
-This allows the system to represent both individual terms and multi-word technical expressions.
-
-## Cosine Similarity
-
-Cosine similarity measures the angular similarity between the job-description vector and resume vector.
-
-Conceptually:
-
-```text
-                 A · B
-cosine(A,B) = ───────────
-              ||A|| ||B||
-```
-
-A higher similarity indicates greater textual overlap between the candidate resume and target job description.
-
----
-
-# Screening Methodology
-
-RankCraft AI separates textual relevance from structured candidate signals.
-
-### Primary signals
-
-| Signal           | Purpose                                           |
-| ---------------- | ------------------------------------------------- |
-| TF-IDF Relevance | Measures textual similarity between JD and resume |
-| Skill Coverage   | Measures recognized skill alignment               |
-| Experience Match | Evaluates experience tenure                       |
-| Education Match  | Evaluates degree-level requirements               |
-| Job Title Match  | Evaluates title relevance                         |
-| ATS Parseability | Evaluates structural resume characteristics       |
-
-The result is presented as a **Screening Score** rather than a hiring probability.
-
-The system is designed to support recruiter judgment rather than make autonomous hiring decisions.
-
----
-
-# System Architecture
-
-RankCraft AI currently uses a lightweight full-stack architecture.
-
-```text
-┌────────────────────────────────────────────┐
-│                 Frontend                   │
-│                                            │
-│ HTML5 + CSS3 + ES6 JavaScript              │
-│ Single Page Application                    │
-└─────────────────────┬──────────────────────┘
-                      │
-                      │ HTTP
-                      ▼
-┌────────────────────────────────────────────┐
-│                  FastAPI                   │
-│                                            │
-│ REST API                                   │
-│ Authentication                             │
-│ Candidate Management                       │
-│ Job Management                             │
-│ Screening Endpoints                        │
-└─────────────────────┬──────────────────────┘
-                      │
-                      ▼
-┌────────────────────────────────────────────┐
-│               ML / NLP Layer               │
-│                                            │
-│ Resume Parser                              │
-│ Preprocessing                              │
-│ Skill Extraction                           │
-│ TF-IDF                                     │
-│ Cosine Similarity                          │
-│ Structured Matchers                        │
-└─────────────────────┬──────────────────────┘
-                      │
-                      ▼
-┌────────────────────────────────────────────┐
-│                 Data Layer                 │
-│                                            │
-│ Static datasets                            │
-│ Skill taxonomy                             │
-│ Sample resumes                             │
-│ Job descriptions                           │
-│ Evaluation data                            │
-└────────────────────────────────────────────┘
-```
-
----
-
-# Technology Stack
-
-## Frontend
-
-* HTML5
-* Modern CSS3
-* JavaScript ES6+
-* Single Page Application architecture
-
-The frontend intentionally has **zero build-step requirements**.
-
-There is no dependency on:
-
-* React
-* Vue
-* Next.js
-* Vite
-* Webpack
-* Node.js
-
-for the current frontend implementation.
-
-## Backend
-
-* Python 3.9+
-* FastAPI
-* Uvicorn
-
-## Machine Learning / NLP
-
-* scikit-learn
-* NumPy
-* TF-IDF
-* Cosine similarity
-* Deterministic skill taxonomy
-
-## Document Processing
-
-* pypdf
-* python-docx
-* standard TXT decoding
-
-## Testing
-
-* pytest
-
----
-
-# Project Structure
-
-```text
-ai-resume-screening-platform/
-│
-├── .env.example
-├── .gitignore
-├── Dockerfile
-├── Procfile
-├── vercel.json
-├── requirements.txt
-├── README.md
-├── DESIGN.md
-│
-├── backend/
-│   ├── __init__.py
-│   ├── main.py
-│   ├── ranking.py
-│   ├── preprocessing.py
-│   ├── resume_parser.py
-│   ├── structured_parser.py
-│   ├── skill_extractor.py
-│   └── matcher.py
-│
-├── frontend/
-│   ├── index.html
-│   ├── style.css
-│   └── script.js
+resume-screening-ai/
 │
 ├── data/
 │   ├── config/
-│   │   └── skills_taxonomy.json
-│   │
-│   ├── job_descriptions/
-│   │
-│   ├── resumes/
-│   │
-│   ├── metadata/
-│   │
+│   │   └── skills_taxonomy.json      # Configurable skill normalization dictionary
+│   ├── resumes/                      # 12 Sample resumes (.pdf, .docx, .txt)
+│   ├── job_descriptions/             # 3 Target job description files (.txt)
+│   ├── metadata/                     # Candidate metadata CSV
 │   └── evaluation/
+│       ├── relevance_labels.csv      # 36 Ground-truth relevance labels CSV
+│       └── adversarial_cases.json    # 8 Adversarial stress-test cases JSON
 │
-└── tests/
-    ├── test_api.py
-    ├── test_saas_features.py
-    ├── test_ats_features.py
-    ├── test_adversarial_qa.py
-    ├── test_ranking.py
-    ├── test_parser.py
-    └── test_preprocessing.py
+├── notebooks/
+│   └── Resume_Screening_Analysis.ipynb  # Executed 16-section demonstration notebook
+│
+├── backend/
+│   ├── __init__.py
+│   ├── main.py                       # FastAPI REST backend & static file server
+│   ├── ranking.py                    # TF-IDF & Multi-Factor ranking engine
+│   ├── preprocessing.py              # Domain-aware NLP cleaning & token mapping
+│   ├── resume_parser.py              # Multi-format document parser (PDF, DOCX, TXT)
+│   ├── structured_parser.py          # Structured profile & ATS parseability auditor
+│   ├── skill_extractor.py            # Configurable skill taxonomy extractor
+│   └── matcher.py                    # Title, Experience & Education matchers
+│
+├── frontend/
+│   ├── index.html                    # Responsive ATS web dashboard
+│   ├── style.css                     # Modern stylesheet with modal & comparison styles
+│   └── script.js                     # Client controller (ranking, modals, export)
+│
+├── results/
+│   ├── candidate_rankings.csv        # Detailed candidate rankings output
+│   ├── evaluation_results.csv        # IR benchmark metrics (P@K, MAP, NDCG)
+│   ├── adversarial_evaluation_results.csv # 8 Adversarial case benchmark results
+│   ├── score_distribution.png        # Score boxplot across relevance grades
+│   ├── adversarial_comparison.png    # TF-IDF vs Screening score diagnostic chart
+│   └── architecture_diagram.png      # System architecture workflow diagram
+│
+├── report/
+│   └── Final_Analytical_Report.md    # 21-section comprehensive analytical report
+│
+├── demo/
+│   └── demo_script.md                # 5-7 minute presentation script & templates
+│
+├── scripts/
+│   ├── generate_sample_data.py       # Sample dataset generator script
+│   ├── run_evaluation.py             # Evaluation & plotting execution script
+│   └── build_and_execute_notebook.py # Notebook builder & preprocessor script
+│
+├── tests/
+│   ├── test_preprocessing.py         # NLP cleaning tests
+│   ├── test_parser.py                # Document parsing tests
+│   ├── test_ranking.py               # TF-IDF & deterministic ranking tests
+│   ├── test_ats_features.py          # ATS parsing, taxonomy, and matcher tests
+│   ├── test_adversarial_qa.py        # Adversarial QA & API robustness tests
+│   └── test_api.py                   # FastAPI REST integration tests
+│
+├── requirements.txt                  # Python dependencies
+├── README.md                         # Project documentation
+├── FINAL_SUBMISSION_CHECKLIST.md     # Capstone submission checklist
+└── .gitignore
 ```
 
 ---
 
-# Data
+## 🚀 Installation & Quickstart
 
-The repository contains demonstration and evaluation data required to reproduce the application workflow.
+```bash
+# 1. Clone repository & create virtual environment
+git clone https://github.com/your-username/resume-screening-ai.git
+cd resume-screening-ai
 
-## Data categories
+python3 -m venv .venv
+source .venv/bin/activate
 
-### Skill Taxonomy
-
-```text
-data/config/skills_taxonomy.json
-```
-
-Contains canonical skill names and aliases used for deterministic normalization.
-
-### Job Descriptions
-
-```text
-data/job_descriptions/
-```
-
-Contains sample target job descriptions.
-
-### Sample Resumes
-
-```text
-data/resumes/
-```
-
-Contains pre-packaged demonstration resumes.
-
-### Metadata
-
-```text
-data/metadata/
-```
-
-Contains candidate metadata used by the application.
-
-### Evaluation Data
-
-```text
-data/evaluation/
-```
-
-Contains relevance labels and adversarial evaluation cases.
-
----
-
-# Privacy and Data Handling
-
-Custom resume uploads are processed **in memory**.
-
-Uploaded files are read into Python memory, parsed, and converted into structured information.
-
-Custom uploaded resumes are not intentionally written to persistent local storage by the application.
-
-The current implementation does not use an external SQL or NoSQL database.
-
-Application workspace state is maintained in memory.
-
-This architecture is appropriate for a prototype/demo environment but has important implications for production deployment, described below.
-
-> Do not upload real patient, hospital, or otherwise sensitive personal data to this public repository.
-
-The repository should contain only synthetic, demonstration, or appropriately de-identified data.
-
----
-
-# API
-
-The backend exposes REST endpoints for the application workflow.
-
-Core endpoint categories include:
-
-### Health
-
-```text
-GET /health
-```
-
-Used to verify backend availability.
-
-### Resume Ranking
-
-```text
-POST /rank
-POST /rank-raw-text
-```
-
-Used to calculate candidate relevance against a target job description.
-
-### Sample Dataset Ranking
-
-```text
-POST /api/rank-sample-data
-```
-
-Runs the ranking pipeline against the bundled demonstration dataset.
-
-### Jobs
-
-```text
-POST /api/jobs
-```
-
-Creates a job.
-
-### Candidate Pipeline
-
-```text
-PATCH /api/candidates/{id}/stage
-```
-
-Updates a candidate's recruiting stage.
-
-### CSV Export
-
-```text
-GET /api/export-csv
-```
-
-Exports supported screening data.
-
-### API Documentation
-
-FastAPI provides interactive API documentation during development.
-
-```text
-/docs
+# 2. Install dependencies
+pip install -r requirements.txt
 ```
 
 ---
 
-# Security
+## 🖥️ Running the Web Dashboard & FastAPI Backend
 
-Security has been considered as part of the application architecture.
-
-Implemented protections include:
-
-* upload size limits
-* batch size limits
-* path traversal protection
-* input validation
-* controlled file handling
-* production environment configuration
-* CORS configuration
-* protected application routes
-* security-oriented automated tests
-
-## Upload Limits
-
-Default configuration:
-
-```text
-Maximum file size: 10 MB
-Maximum resumes per batch: 50
+```bash
+uvicorn backend.main:app --reload --host 127.0.0.1 --port 8000
 ```
 
-These limits help prevent uncontrolled memory consumption during resume processing.
-
-## Path Traversal
-
-Read-only application assets are resolved through controlled paths to prevent requests from accessing files outside their intended directories.
-
-## Secrets
-
-Secrets and credentials should never be committed to the repository.
-
-Use:
-
-```text
-.env
-```
-
-for local secrets and:
-
-```text
-.env.example
-```
-
-for documenting required configuration variables.
+- 🌐 **Web Dashboard:** [http://127.0.0.1:8000](http://127.0.0.1:8000)
+- 📖 **Interactive Swagger Docs:** [http://127.0.0.1:8000/docs](http://127.0.0.1:8000/docs)
+- 🚀 **1-Click Demo:** Click "🚀 1-Click Instant Demo" in the top banner.
 
 ---
 
-# Testing
+## 📓 Running the Jupyter Notebook
 
-The project includes automated tests covering the primary application, ML, API, parser, security, and adversarial workflows.
+```bash
+jupyter notebook notebooks/Resume_Screening_Analysis.ipynb
+```
 
-Test categories include:
+---
 
-### API Tests
-
-* endpoint behavior
-* validation
-* security headers
-* path traversal
-* SPA routes
-
-### SaaS Feature Tests
-
-* authentication
-* dashboard
-* jobs
-* candidate pipeline
-* analytics
-
-### ATS Tests
-
-* skill normalization
-* structured parsing
-* ATS diagnostics
-
-### Ranking Tests
-
-* TF-IDF calculations
-* cosine similarity
-* deterministic ranking
-
-### Parser Tests
-
-* PDF extraction
-* DOCX extraction
-* TXT extraction
-
-### Preprocessing Tests
-
-* token cleaning
-* technical term preservation
-* preprocessing behavior
-
-### Adversarial Tests
-
-The project also includes adversarial test cases designed to identify unexpected ranking and processing behavior.
-
-## Run Tests
+## 🧪 Running Automated Tests
 
 ```bash
 pytest -v tests/
 ```
-
-Expected baseline:
-
-```text
-54 automated test suites
-```
+**Expected output:** `54 passed in ~1.3s` across all unit, parser, ATS, ranking, API, SaaS workflows, and security tests.
 
 ---
 
-# Performance
+## 📈 Evaluation & Benchmark Results
 
-For standard demonstration workloads, the screening pipeline is lightweight.
+### Standard 3-Role IR Benchmark
+| Job Role ID | Role Title | Total Evaluated | Precision@1 | Precision@3 | Precision@5 | MAP | MRR | NDCG@5 |
+| :--- | :--- | :---: | :---: | :---: | :---: | :---: | :---: |
+| **`JOB-01`** | Senior AI / ML Engineer | 12 | **1.0000** | **1.0000** | **1.0000** | **1.0000** | **1.0000** | **1.0000** |
+| **`JOB-02`** | Full-Stack Python Developer | 12 | **1.0000** | **1.0000** | **0.8000** | **0.9667** | **1.0000** | **0.9497** |
+| **`JOB-03`** | Data Analyst & BI Specialist| 12 | **1.0000** | **1.0000** | **0.6000** | **0.9167** | **1.0000** | **0.9286** |
+| **OVERALL** | **System Macro-Average** | **12** | **1.0000** | **1.0000** | **0.8000** | **0.9611** | **1.0000** | **0.9594** |
 
-The current implementation has been observed to process approximately:
-
-```text
-12–50 candidate resumes
-```
-
-with execution times in the approximate range of:
-
-```text
-12–25 ms
-```
-
-for the core processing workflow under the tested local environment.
-
-Typical memory consumption remains relatively low for demonstration-scale workloads.
-
-Actual production performance will depend on:
-
-* resume size
-* number of candidates
-* server resources
-* document complexity
-* deployment environment
-* concurrent requests
-
-Benchmark numbers should therefore be interpreted as local application measurements rather than universal production guarantees.
+### Adversarial Benchmark Case Studies (8 Scenarios)
+| Case ID | Scenario | Final Rank | Screening Score (%) | TF-IDF Match (%) | Diagnostic Result |
+| :---: | :--- | :---: | :---: | :---: | :--- |
+| **`CASE-A`** | Exact Keyword Match | #1 | **44.4%** | 12.67% | Ideal baseline candidate meeting all requirements. |
+| **`CASE-C`** | Abbreviation Match | #2 | **40.5%** | 8.02% | Skill normalizer resolves `ML`, `DL`, `K8s`, `CI/CD`. |
+| **`CASE-G`** | Strong Exp. / No Degree | #3 | **36.8%** | 9.86% | Rewarded for 10y experience; degree gap transparently penalized. |
+| **`CASE-B`** | Synonym Match | #4 | **34.8%** | 12.61% | Taxonomy maps `computational linguistics` & `containerization`. |
+| **`CASE-D`** | Keyword Stuffer (Sales Dir.) | #5 | **31.9%** | 5.77% | **Corrected:** Pure TF-IDF gets tricked; Title/Degree matchers penalize to Rank #5. |
+| **`CASE-H`** | Junior (0.5y Exp.) | #6 | **31.4%** | 6.53% | Penalized appropriately on experience duration. |
+| **`CASE-F`** | Missing Critical Skills | #7 | **30.3%** | 3.43% | Missing FastAPI/Docker flagged in skill coverage. |
+| **`CASE-E`** | Descriptive Concept Wording| #8 | **24.9%** | 6.87% | Demonstrates lexical limits without dense embeddings. |
 
 ---
 
-# Running Locally
+## 🛡️ Privacy & Ethical Guardrails
 
-## Prerequisites
-
-Install:
-
-* Python 3.9+
-* pip
-* Git
-
-## 1. Clone the Repository
-
-```bash
-git clone <YOUR_REPOSITORY_URL>
-cd ai-resume-screening-platform
-```
-
-## 2. Create a Virtual Environment
-
-macOS / Linux:
-
-```bash
-python3 -m venv .venv
-source .venv/bin/activate
-```
-
-Windows:
-
-```bash
-python -m venv .venv
-.venv\Scripts\activate
-```
-
-## 3. Install Dependencies
-
-```bash
-pip install -r requirements.txt
-```
-
-## 4. Configure Environment Variables
-
-Create a local `.env` file based on:
-
-```text
-.env.example
-```
-
-Never commit `.env`.
-
-## 5. Start the Application
-
-```bash
-uvicorn backend.main:app --reload
-```
-
-The application should then be available at:
-
-```text
-http://localhost:8000
-```
-
-FastAPI documentation:
-
-```text
-http://localhost:8000/docs
-```
+- **Demographic Scrubbing:** Ranking strictly ignores name, gender, age, email, phone, address, photo, nationality, and marital status.
+- **Human-in-the-Loop:** System acts exclusively as a prioritization assistant. No automated hiring or rejection decisions are executed autonomously.
 
 ---
 
-# Environment Variables
+## 🔮 Limitations & Future Scope
 
-The application supports the following configuration:
-
-```env
-ENVIRONMENT=production
-
-HOST=0.0.0.0
-
-PORT=8000
-
-ALLOWED_ORIGINS=*
-
-MAX_FILE_SIZE_MB=10
-
-MAX_RESUMES_BATCH=50
-
-LOG_LEVEL=INFO
-```
-
-## Configuration Reference
-
-| Variable            | Purpose                                | Example               |
-| ------------------- | -------------------------------------- | --------------------- |
-| `ENVIRONMENT`       | Runtime environment                    | `production`          |
-| `HOST`              | Server bind address                    | `0.0.0.0`             |
-| `PORT`              | Server port                            | `8000`                |
-| `ALLOWED_ORIGINS`   | Allowed frontend origins               | `https://example.com` |
-| `MAX_FILE_SIZE_MB`  | Maximum resume size                    | `10`                  |
-| `MAX_RESUMES_BATCH` | Maximum candidates per screening batch | `50`                  |
-| `LOG_LEVEL`         | Application logging level              | `INFO`                |
-
-For production deployment, replace permissive development settings with the minimum required access.
+- **Descriptive Text:** Candidates describing achievements conceptually without keywords receive lower lexical scores (future scope: hybrid Sentence-BERT reranking).
+- **Image-Only Resumes:** Rasterized image PDFs require OCR (future scope: Tesseract integration).
 
 ---
 
-# Deployment
-
-The application includes deployment configuration for container-based hosting as well as Vercel experimentation.
-
-## Container Deployment
-
-The repository includes:
-
-```text
-Dockerfile
-Procfile
-```
-
-The application can be run as a persistent FastAPI/Uvicorn service.
-
-Example:
-
-```bash
-uvicorn backend.main:app --host 0.0.0.0 --port 8000
-```
-
-Container-based deployment is advantageous for the current architecture because workspace mutations are held in Python process memory.
-
-Suitable environments may include:
-
-* Render
-* Fly.io
-* Railway
-* Docker-based infrastructure
-* other persistent container platforms
-
----
-
-# Vercel Deployment
-
-The repository also includes:
-
-```text
-vercel.json
-```
-
-for Vercel-compatible deployment.
-
-The current architecture can be adapted to Vercel's serverless Python execution model.
-
-However, there is an important architectural limitation.
-
-The application currently maintains mutable workspace state in process memory.
-
-For example:
-
-* newly created jobs
-* candidate stage changes
-* workspace activity
-
-may be reset when a serverless function instance is replaced or restarted.
-
-Therefore:
-
-> Vercel deployment is appropriate for a demonstration deployment, but persistent production SaaS usage should use an external database or persistent backend architecture.
-
-For production-scale deployment, a recommended architecture is:
-
-```text
-                 ┌─────────────────┐
-                 │    Frontend     │
-                 │     Vercel      │
-                 └────────┬────────┘
-                          │
-                          ▼
-                 ┌─────────────────┐
-                 │     FastAPI     │
-                 │ Persistent API  │
-                 └────────┬────────┘
-                          │
-              ┌───────────┼───────────┐
-              ▼           ▼           ▼
-          Database    File Storage   ML/NLP
-```
-
-This would allow application state and uploaded candidate data to persist independently of backend process lifetime.
-
----
-
-# Responsible AI
-
-RankCraft AI is designed as a decision-support system.
-
-The system should not be interpreted as an autonomous hiring decision-maker.
-
-## Design Principles
-
-### Explainability
-
-Screening results should expose the evidence contributing to a candidate's score.
-
-### Human Oversight
-
-Recruiters remain responsible for final decisions.
-
-### Data Minimization
-
-Candidate information should only be processed when relevant to the screening workflow.
-
-### Sensitive Attributes
-
-Irrelevant sensitive characteristics should not be intentionally used for candidate ranking.
-
-Examples include:
-
-* gender
-* age
-* religion
-* marital status
-* photograph
-* nationality
-* other unrelated personal characteristics
-
-### Limitations of Keyword-Based Screening
-
-TF-IDF is fundamentally a statistical text representation method.
-
-It can therefore be affected by:
-
-* terminology differences
-* synonyms
-* keyword frequency
-* resume formatting
-* missing information
-* unusual phrasing
-
-A high screening score should therefore not be interpreted as proof that a candidate is objectively better qualified.
-
----
-
-# Limitations
-
-The current version is a research/prototype-oriented application rather than a fully productionized enterprise ATS.
-
-Important limitations include:
-
-## In-Memory State
-
-Application state is currently stored in Python process memory.
-
-Restarting the backend can reset mutable state.
-
-## No External Database
-
-The current version does not use PostgreSQL, MongoDB, or another persistent database.
-
-## TF-IDF Limitations
-
-TF-IDF measures lexical relevance rather than deep semantic equivalence.
-
-Two resumes may describe similar experience using substantially different terminology and receive different similarity scores.
-
-## Demonstration Dataset
-
-The bundled dataset is intended for demonstration and evaluation.
-
-It should not be interpreted as representative of the entire hiring population.
-
-## Production File Storage
-
-Custom uploads are processed in memory rather than using dedicated production object storage.
-
-A production deployment would benefit from controlled object storage with appropriate security and retention policies.
-
-## Authentication
-
-The current authentication architecture is lightweight and intended for the prototype environment.
-
-A production recruiting platform would require stronger identity, authorization, session management, audit logging, and organizational access controls.
-
----
-
-# Research Context
-
-The project explores the use of natural-language processing and machine-learning techniques for automated resume screening.
-
-The central research question is:
-
-> Can deterministic NLP and multi-factor candidate matching provide a useful, transparent mechanism for prioritizing resumes against a target job description?
-
-The implementation focuses on:
-
-* document processing
-* NLP preprocessing
-* TF-IDF representation
-* cosine similarity
-* skill normalization
-* structured candidate attributes
-* explainable screening
-* adversarial evaluation
-
-The architecture intentionally favors interpretability and reproducibility over opaque end-to-end prediction.
-
----
-
-# Future Improvements
-
-Potential future development directions include:
-
-### Persistent Data Layer
-
-Introduce PostgreSQL or another production database for:
-
-* users
-* organizations
-* jobs
-* candidates
-* pipeline stages
-* activity logs
-
-### Object Storage
-
-Move resume storage to secure object storage such as:
-
-* Amazon S3
-* Cloudflare R2
-* Google Cloud Storage
-
-with appropriate access controls.
-
-### Semantic Search
-
-Evaluate transformer-based embeddings alongside TF-IDF to improve semantic matching.
-
-### Hybrid Ranking
-
-Combine:
-
-```text
-TF-IDF
-+
-Semantic Similarity
-+
-Skill Matching
-+
-Experience Matching
-+
-Education Matching
-```
-
-while maintaining explainability.
-
-### Advanced Evaluation
-
-Evaluate the system using:
-
-* precision
-* recall
-* F1
-* ranking metrics
-* false-positive analysis
-* false-negative analysis
-* robustness tests
-* fairness-oriented evaluations
-
-### Enterprise Access Control
-
-Introduce role-based permissions for:
-
-* recruiters
-* hiring managers
-* administrators
-* candidates
-
-### Production Observability
-
-Add:
-
-* structured logging
-* metrics
-* tracing
-* error monitoring
-* performance monitoring
-
----
-
-# Project Status
-
-## Current Capabilities
-
-* [x] Resume ingestion
-* [x] PDF parsing
-* [x] DOCX parsing
-* [x] TXT parsing
-* [x] NLP preprocessing
-* [x] PII-oriented preprocessing
-* [x] Skill normalization
-* [x] TF-IDF vectorization
-* [x] Cosine similarity
-* [x] Structured candidate matching
-* [x] ATS parseability diagnostics
-* [x] Candidate ranking
-* [x] Candidate pipeline
-* [x] Job management
-* [x] Screening workspace
-* [x] Candidate profiles
-* [x] Analytics
-* [x] Automated testing
-* [x] Security-oriented validation
-* [x] Container deployment configuration
-* [x] Vercel deployment configuration
-
----
-
-# Contributing
-
-Contributions are welcome.
-
-Before submitting a pull request:
-
-1. Explain the problem being solved.
-2. Describe the implementation.
-3. Add or update tests.
-4. Verify that existing functionality remains intact.
-5. Document meaningful architectural changes.
-6. Avoid committing secrets or sensitive candidate data.
-
----
-
-# Security
-
-If you discover a security vulnerability, do not publicly disclose sensitive exploit details before the issue can be addressed.
-
-Please report security issues privately to the repository maintainer.
-
----
-
-# License
-
-This project is provided for research, educational, and demonstration purposes.
-
-If this repository is intended to use an open-source license, add the appropriate license file here.
-
----
-
-## Disclaimer
-
-RankCraft AI is an AI-assisted candidate screening and decision-support system.
-
-It is not a substitute for qualified human judgment, professional recruitment practices, or applicable employment and anti-discrimination requirements.
-
-Screening scores are model-derived signals and should not be treated as definitive measures of candidate suitability.
-
----
-
-# Built With
-
-```text
-Python
-FastAPI
-Uvicorn
-scikit-learn
-NumPy
-pypdf
-python-docx
-HTML5
-CSS3
-JavaScript
-pytest
-```
-
----
-
-## Architecture at a Glance
-
-```text
-┌─────────────────────────────────────────────┐
-│               RankCraft AI                  │
-│                                             │
-│        Intelligent Recruiting Workspace     │
-└──────────────────────┬──────────────────────┘
-                       │
-        ┌──────────────┴──────────────┐
-        │                             │
-        ▼                             ▼
-  Recruiter UI                  FastAPI API
-        │                             │
-        │                    ┌────────┴────────┐
-        │                    │                 │
-        ▼                    ▼                 ▼
-    Jobs &             Resume Parser      ML Ranking
-   Candidates               │                 │
-                            ▼                 ▼
-                       Preprocessing     TF-IDF
-                            │           + Cosine
-                            ▼                 │
-                       Skill Taxonomy         │
-                            │                 │
-                            └────────┬────────┘
-                                     ▼
-                              Screening Score
-                                     │
-                                     ▼
-                              Candidate Ranking
-                                     │
-                                     ▼
-                              Human Decision
-```
-
----
-
-## Final Principle
-
-**RankCraft AI does not decide who should be hired.**
-
-It helps recruiters answer a narrower question:
-
-> **"Which candidates should I review first, and what evidence explains their ranking?"**
+## 📄 License
+This project is open-source under the [MIT License](LICENSE).

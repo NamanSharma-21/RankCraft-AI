@@ -1,0 +1,22 @@
+Job Title: Full-Stack Python Developer
+Department: Engineering
+Location: Hybrid
+
+About the Role:
+We are looking for a skilled Full-Stack Python Developer to build modern, high-performance web applications. You will be responsible for creating robust backend services and responsive user interfaces.
+
+Key Responsibilities:
+- Develop scalable backend RESTful APIs using Python, FastAPI, and Django.
+- Design database schemas and write optimized queries with PostgreSQL and SQLAlchemy.
+- Build responsive, accessible frontend interfaces using HTML5, CSS3, JavaScript, and modern UI patterns.
+- Containerize applications with Docker and deploy services to AWS or cloud environments.
+- Maintain test coverage through comprehensive unit and integration testing (pytest, Jest).
+- Collaborate with product designers and engineering teams in an Agile sprint environment.
+
+Requirements & Qualifications:
+- 3+ years of professional full-stack web development experience.
+- Strong proficiency in Python, FastAPI, Django, or Flask.
+- Solid front-end skills in JavaScript, HTML5, CSS3, DOM manipulation, and responsive design.
+- Experience with relational databases: PostgreSQL, MySQL, and database migrations.
+- Experience with Docker, Git version control, and GitHub Actions CI/CD workflows.
+- Strong understanding of RESTful API architecture, HTTP protocols, and JSON data exchange.

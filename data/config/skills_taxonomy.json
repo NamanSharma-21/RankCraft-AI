@@ -1,0 +1,79 @@
+{
+  "skills": {
+    "Python": ["python", "python3", "py"],
+    "Machine Learning": ["machine learning", "ml", "statistical learning"],
+    "Deep Learning": ["deep learning", "dl", "neural networks", "deep neural networks"],
+    "Natural Language Processing": ["natural language processing", "nlp", "computational linguistics", "text processing"],
+    "Computer Vision": ["computer vision", "cv", "image processing"],
+    "PyTorch": ["pytorch", "torch"],
+    "TensorFlow": ["tensorflow", "tf", "keras"],
+    "Scikit-Learn": ["scikit-learn", "scikitlearn", "sklearn"],
+    "TF-IDF": ["tf-idf", "tfidf", "term frequency inverse document frequency"],
+    "Transformers": ["transformers", "huggingface", "llms", "large language models", "bert", "gpt"],
+    "MLOps": ["mlops", "model deployment", "model monitoring", "ml pipeline", "ml pipelines"],
+    "FastAPI": ["fastapi", "fast api"],
+    "Django": ["django", "django rest framework", "drf"],
+    "Flask": ["flask"],
+    "JavaScript": ["javascript", "js", "ecmascript"],
+    "TypeScript": ["typescript", "ts"],
+    "React": ["react", "react.js", "reactjs"],
+    "Node.js": ["node.js", "nodejs", "node"],
+    "HTML5": ["html5", "html"],
+    "CSS3": ["css3", "css"],
+    "PostgreSQL": ["postgresql", "postgres", "psql"],
+    "MySQL": ["mysql"],
+    "MongoDB": ["mongodb", "mongo"],
+    "Redis": ["redis"],
+    "SQL": ["sql", "structured query language", "relational database", "relational databases"],
+    "Docker": ["docker", "containerization", "containers"],
+    "Kubernetes": ["kubernetes", "k8s"],
+    "CI/CD": ["ci/cd", "cicd", "ci cd", "continuous integration", "continuous deployment"],
+    "AWS": ["aws", "amazon web services", "ec2", "s3", "lambda"],
+    "GCP": ["gcp", "google cloud platform", "google cloud"],
+    "Azure": ["azure", "microsoft azure"],
+    "Git": ["git", "github", "gitlab", "version control"],
+    "Pandas": ["pandas"],
+    "NumPy": ["numpy"],
+    "Tableau": ["tableau"],
+    "Power BI": ["power bi", "powerbi", "power-bi"],
+    "Excel": ["excel", "advanced excel", "spreadsheets", "vba"],
+    "ETL": ["etl", "extract transform load", "data pipelines", "data pipeline"],
+    "Data Warehousing": ["data warehousing", "data warehouse", "snowflake", "bigquery", "redshift"],
+    "Data Visualization": ["data visualization", "data storytelling", "bi reporting", "dashboards"],
+    "REST API": ["rest api", "restful api", "restful apis", "rest apis", "rest"],
+    "GraphQL": ["graphql"],
+    "C++": ["c++", "cpp"],
+    "C#": ["c#", "csharp"],
+    ".NET": [".net", "dotnet", "asp.net"],
+    "Java": ["java"],
+    "Go": ["golang", "go"],
+    "Rust": ["rust"],
+    "Pytest": ["pytest", "unit testing", "automated testing", "test automation"],
+    "Linux": ["linux", "unix", "bash", "shell scripting", "shell"],
+    "Agile": ["agile", "scrum", "kanban", "sprints"]
+  },
+  "categories": {
+    "AI / ML": [
+      "Machine Learning", "Deep Learning", "Natural Language Processing", "Computer Vision",
+      "PyTorch", "TensorFlow", "Scikit-Learn", "TF-IDF", "Transformers", "MLOps"
+    ],
+    "Programming Languages": [
+      "Python", "JavaScript", "TypeScript", "SQL", "C++", "C#", "Java", "Go", "Rust"
+    ],
+    "Web & Backend": [
+      "FastAPI", "Django", "Flask", "React", "Node.js", "HTML5", "CSS3", "REST API", "GraphQL", ".NET"
+    ],
+    "Databases": [
+      "PostgreSQL", "MySQL", "MongoDB", "Redis", "SQL"
+    ],
+    "Cloud & DevOps": [
+      "Docker", "Kubernetes", "CI/CD", "AWS", "GCP", "Azure", "Git", "Linux"
+    ],
+    "Data Analytics & BI": [
+      "Pandas", "NumPy", "Tableau", "Power BI", "Excel", "ETL", "Data Warehousing", "Data Visualization"
+    ],
+    "Testing & Methodology": [
+      "Pytest", "Agile"
+    ]
+  }
+}

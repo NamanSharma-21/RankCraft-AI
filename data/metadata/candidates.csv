@@ -1,0 +1,13 @@
+candidate_id,name,file_name,file_type,primary_domain,years_experience
+CAND-001,Dr. Alex Rivera,candidate_01_senior_ml_engineer.pdf,PDF,AI / Machine Learning,6
+CAND-002,Sarah Chen,candidate_02_nlp_data_scientist.docx,DOCX,NLP & Data Science,4
+CAND-003,Marcus Vance,candidate_03_fullstack_python_dev.pdf,PDF,Full-Stack Web Development,5
+CAND-004,Elena Rostova,candidate_04_backend_python_engineer.txt,TXT,Backend Engineering,4
+CAND-005,David Kim,candidate_05_senior_data_analyst.pdf,PDF,Data Analytics & BI,5
+CAND-006,Priya Patel,candidate_06_junior_data_scientist.docx,DOCX,Data Science / ML,2
+CAND-007,Lucas Meyer,candidate_07_devops_cloud_engineer.pdf,PDF,DevOps & Cloud Infrastructure,6
+CAND-008,Chloe Martin,candidate_08_frontend_developer.docx,DOCX,Frontend Web Development,4
+CAND-009,James Wilson,candidate_09_digital_marketing_specialist.pdf,PDF,Digital Marketing & Growth,5
+CAND-010,Olivia Taylor,candidate_10_certified_public_accountant.txt,TXT,Accounting & Finance,7
+CAND-011,Ethan Davis,candidate_11_technical_writer.docx,DOCX,Technical Writing & Documentation,4
+CAND-012,Sophia Martinez,candidate_12_database_administrator.pdf,PDF,Database Administration & SQL,6

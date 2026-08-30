@@ -1,0 +1,37 @@
+job_id,job_title,rank,candidate_id,candidate_name,file_type,screening_score,score_percentage,skill_coverage_pct,title_match_pct,experience_match_pct,education_match_pct,ground_truth_grade,ground_truth_category
+JOB-01,Senior AI / Machine Learning Engineer,1,CAND-001,Dr. Alex Rivera,PDF,65.0,30.13,91.7,66.7,100.0,100.0,3,"Direct senior ML/NLP background, PyTorch, FastAPI, AWS, MLOps, TF-IDF."
+JOB-01,Senior AI / Machine Learning Engineer,2,CAND-002,Sarah Chen,DOCX,47.7,18.65,70.8,16.7,100.0,100.0,3,"Strong NLP data scientist, Scikit-Learn, PyTorch, TF-IDF, text vectorization."
+JOB-01,Senior AI / Machine Learning Engineer,3,CAND-004,Elena Rostova,TXT,40.0,9.89,54.2,16.7,100.0,100.0,2,"Backend Python engineer with FastAPI, Docker, CI/CD, SQL (Python/API match, lacks ML/NLP)."
+JOB-01,Senior AI / Machine Learning Engineer,4,CAND-003,Marcus Vance,PDF,39.0,10.76,54.2,7.7,100.0,100.0,2,"Full-stack Python developer with FastAPI, Docker, AWS, PostgreSQL (solid Python/backend match, lacks deep ML)."
+JOB-01,Senior AI / Machine Learning Engineer,5,CAND-006,Priya Patel,DOCX,36.4,9.68,50.0,0.0,100.0,100.0,2,"Junior Data Scientist with ML, Python, Scikit-Learn, TF-IDF background."
+JOB-01,Senior AI / Machine Learning Engineer,6,CAND-007,Lucas Meyer,PDF,34.1,7.02,25.0,33.3,100.0,100.0,1,"DevOps engineer with Docker, Kubernetes, AWS, Python (infrastructure match, no ML/NLP)."
+JOB-01,Senior AI / Machine Learning Engineer,7,CAND-005,David Kim,PDF,28.1,2.9,16.7,18.2,100.0,100.0,1,"Senior Data Analyst with Python/Pandas/SQL (analytics background, no ML/NLP engineering)."
+JOB-01,Senior AI / Machine Learning Engineer,8,CAND-012,Sophia Martinez,PDF,26.4,5.5,16.7,0.0,100.0,100.0,1,"Database admin with SQL, PostgreSQL, Python (database match, no ML/NLP)."
+JOB-01,Senior AI / Machine Learning Engineer,9,CAND-011,Ethan Davis,DOCX,17.8,1.84,8.3,0.0,100.0,50.0,0,"Technical writer, documentation only."
+JOB-01,Senior AI / Machine Learning Engineer,10,CAND-010,Olivia Taylor,TXT,16.7,1.04,0.0,8.3,100.0,50.0,0,"Certified Public Accountant, non-technical financial domain."
+JOB-01,Senior AI / Machine Learning Engineer,11,CAND-008,Chloe Martin,DOCX,16.6,1.5,4.2,0.0,100.0,50.0,0,"Frontend web developer (React/CSS/HTML), no ML/NLP/Python."
+JOB-01,Senior AI / Machine Learning Engineer,12,CAND-009,James Wilson,PDF,15.2,0.6,0.0,0.0,100.0,50.0,0,"Digital marketing & SEO, no software/ML skills."
+JOB-02,Full-Stack Python Developer,1,CAND-003,Marcus Vance,PDF,68.4,30.38,100.0,75.0,100.0,100.0,3,Direct full-stack Python/FastAPI/Django/HTML5/CSS3/JavaScript/PostgreSQL match.
+JOB-02,Full-Stack Python Developer,2,CAND-004,Elena Rostova,TXT,44.9,18.19,70.6,0.0,100.0,100.0,3,Strong backend Python/FastAPI/Django/PostgreSQL engineer with API expertise.
+JOB-02,Full-Stack Python Developer,3,CAND-001,Dr. Alex Rivera,PDF,40.0,5.8,70.6,0.0,100.0,100.0,2,"Strong Python/FastAPI/Docker/PostgreSQL backend skills, primary focus is ML."
+JOB-02,Full-Stack Python Developer,4,CAND-002,Sarah Chen,DOCX,38.6,6.07,64.7,0.0,100.0,100.0,2,"Data scientist with Python, FastAPI, Docker, PostgreSQL skills."
+JOB-02,Full-Stack Python Developer,5,CAND-006,Priya Patel,DOCX,33.1,3.3,47.1,0.0,100.0,100.0,1,Junior Data Scientist with basic Python/SQL.
+JOB-02,Full-Stack Python Developer,6,CAND-008,Chloe Martin,DOCX,29.6,12.39,23.5,25.0,100.0,50.0,2,"Frontend developer with strong HTML5, CSS3, JavaScript, UI/UX (covers frontend half of role)."
+JOB-02,Full-Stack Python Developer,7,CAND-007,Lucas Meyer,PDF,28.8,3.63,29.4,0.0,100.0,100.0,1,"DevOps engineer with Docker, CI/CD, Python scripting, AWS."
+JOB-02,Full-Stack Python Developer,8,CAND-012,Sophia Martinez,PDF,28.5,6.58,23.5,0.0,100.0,100.0,1,"Database admin with PostgreSQL, SQL, Python scripting."
+JOB-02,Full-Stack Python Developer,9,CAND-005,David Kim,PDF,26.4,1.77,17.6,8.3,100.0,100.0,1,"Data analyst with Python/SQL, lacks web development experience."
+JOB-02,Full-Stack Python Developer,10,CAND-011,Ethan Davis,DOCX,20.0,5.1,11.8,0.0,100.0,50.0,0,"Technical writer, documentation only."
+JOB-02,Full-Stack Python Developer,11,CAND-010,Olivia Taylor,TXT,15.2,0.39,0.0,0.0,100.0,50.0,0,CPA Accountant.
+JOB-02,Full-Stack Python Developer,12,CAND-009,James Wilson,PDF,15.1,0.13,0.0,0.0,100.0,50.0,0,Digital marketing & SEO.
+JOB-03,Data Analyst & Business Intelligence Specialist,1,CAND-005,David Kim,PDF,66.7,31.77,100.0,60.0,100.0,100.0,3,"Direct Senior Data Analyst match with SQL, Tableau, Power BI, Python, Pandas."
+JOB-03,Data Analyst & Business Intelligence Specialist,2,CAND-006,Priya Patel,DOCX,36.7,7.13,50.0,9.1,100.0,100.0,2,"Junior Data Scientist with SQL, Pandas, Matplotlib, exploratory data analysis."
+JOB-03,Data Analyst & Business Intelligence Specialist,3,CAND-002,Sarah Chen,DOCX,34.5,4.53,40.0,18.2,100.0,100.0,2,"Data scientist with strong Python, Pandas, NumPy, statistical modeling, SQL."
+JOB-03,Data Analyst & Business Intelligence Specialist,4,CAND-001,Dr. Alex Rivera,PDF,30.8,2.03,40.0,0.0,100.0,100.0,1,"Senior ML engineer with Python, SQL, statistics (overqualified/focused on deep learning)."
+JOB-03,Data Analyst & Business Intelligence Specialist,5,CAND-004,Elena Rostova,TXT,30.3,3.54,30.0,9.1,100.0,100.0,1,"Backend engineer with SQL, Python, PostgreSQL."
+JOB-03,Data Analyst & Business Intelligence Specialist,6,CAND-012,Sophia Martinez,PDF,29.7,5.56,30.0,0.0,100.0,100.0,2,"Senior DBA with advanced SQL, query tuning, PostgreSQL, ETL."
+JOB-03,Data Analyst & Business Intelligence Specialist,7,CAND-003,Marcus Vance,PDF,28.7,3.11,30.0,0.0,100.0,100.0,1,"Full-stack developer with SQL, PostgreSQL, Python."
+JOB-03,Data Analyst & Business Intelligence Specialist,8,CAND-007,Lucas Meyer,PDF,22.9,0.96,10.0,0.0,100.0,100.0,0,DevOps engineer with infrastructure focus.
+JOB-03,Data Analyst & Business Intelligence Specialist,9,CAND-010,Olivia Taylor,TXT,18.2,1.74,10.0,0.0,100.0,50.0,0,"CPA accountant (financial reporting, not BI data analytics)."
+JOB-03,Data Analyst & Business Intelligence Specialist,10,CAND-009,James Wilson,PDF,15.5,1.3,0.0,0.0,100.0,50.0,0,"Digital marketing (analytics mentions SEO/Google Ads, not BI)."
+JOB-03,Data Analyst & Business Intelligence Specialist,11,CAND-008,Chloe Martin,DOCX,15.4,0.89,0.0,0.0,100.0,50.0,0,Frontend developer (React/CSS).
+JOB-03,Data Analyst & Business Intelligence Specialist,12,CAND-011,Ethan Davis,DOCX,15.3,0.8,0.0,0.0,100.0,50.0,0,Technical writer.
